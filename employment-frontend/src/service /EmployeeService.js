@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "http://localhost:8080/employee";
+
 class EmployeeService{
 
     //**Method to get all employee from our api or database */

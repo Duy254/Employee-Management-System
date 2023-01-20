@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import EmployeeService from '../service /EmployeeService';
+import axios from 'axios';
 
 const ListEmployeeComponent = () => {
 const [employeeArray, setEmployeeArray] = useState([]);
@@ -12,6 +13,10 @@ const [employeeArray, setEmployeeArray] = useState([]);
         .then(res=>{setEmployeeArray(res.data); console.log(res)})
         .catch(e=>console.log(e));
 
+    }
+    function deleteEmployee(e, id) {
+        e.preventDefault()
+        EmployeeService.deleteEmployee(id).then(getAllEmployee()).catch(e => console.log(e));
     }
     return (
     <div className='container'>
@@ -26,6 +31,18 @@ const [employeeArray, setEmployeeArray] = useState([]);
                 <th>Actions</th>
             </thead>
             <tbody>
+                {employeeArray.map(employee=> 
+                <tr id = {employee.id}>
+                    <td> {employee.id} </td>
+                    <td> {employee.firstName} </td>
+                    <td> {employee.lastName} </td>
+                    <td> {employee.email} </td>
+                    <td>
+                        <Link to={'/add-employee/${employee.id}'} className='btn btn-info' href =""> Update</Link>{" "}
+                        <a onClick={(e) => deleteEmployee(e, employee.id)} className='btn btn-danger' href = " " > Delete </a>
+                    </td>
+                </tr>
+                    )}
 
             </tbody>
         </table>
